@@ -28,6 +28,9 @@ func _ready():
 func init(_body_to_move : CharacterBody3D):
 	_bodyToMove = _body_to_move
 
+# method to set the move vector using the _bodyToMove's 
+# transform basis 
+# (so that movement is relative to the _bodyToMove) 
 # 0: forward, 1: backward, 2: left, 3: right
 func set_move_vec(dir : int):
 	match dir:

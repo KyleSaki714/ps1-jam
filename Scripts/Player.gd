@@ -1,6 +1,6 @@
 extends Node3D
 
-class_name CorePlayer
+class_name PlayerCore
 
 @export var _moveComponent : MoveComponent
 #signal input_info
@@ -37,6 +37,28 @@ func _process(delta: float) -> void:
 	
 	#emit_signal("input_info", move_vec)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		capture_mouse()
+	if (Input.is_action_just_pressed("debug_transfer_dude")):
+		print("transfer to dude")
+		var dude = get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/Dude")
+		if dude != null:
+			_moveComponent._camera.current = false
+			reparent(dude)
+			_moveComponent = dude.get_node_or_null("MoveComponent")
+			_moveComponent._camera.current = true
+	if (Input.is_action_just_pressed("debug_transfer_rat")):
+		print("transfer to rat")
+		var rat = get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/Rat")
+		if rat != null:
+			# deactivate old camera
+			_moveComponent._camera.current = false
+			reparent(rat)
+			_moveComponent = rat.get_node_or_null("MoveComponent")
+			_moveComponent._camera.current = true
+		
+
 func _input(event: InputEvent) -> void:
 	if _moveComponent == null:
 		push_error("_moveComponent is null for PlayerCore!")
@@ -46,7 +68,7 @@ func _input(event: InputEvent) -> void:
 		#print("call mouse motion")
 		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
 		#print(type_string(typeof(event.relative)))
-
+	
 	#if event is InputEventKey and event.pressed:
 		#if event.scancode in hotkeys:
 			#weapon_manager.switch_to_weapon_slot(hotkeys[event.scancode])
