@@ -1,6 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=17 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
+[ext_resource type="Script" uid="uid://cpatb03o8i346" path="res://MoveComponent.gd" id="2_js7pq"]
+[ext_resource type="PackedScene" uid="uid://ckqqd2p6gtoo1" path="res://assets/rat.glb" id="3_bcbcq"]
+[ext_resource type="Script" uid="uid://cilw0cimmcybd" path="res://Scripts/Player.gd" id="3_js7pq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_js7pq"]
+sky_material = SubResource("ProceduralSkyMaterial_bcbcq")
+
+[sub_resource type="Environment" id="Environment_eu7l1"]
+background_mode = 2
+sky = SubResource("Sky_js7pq")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwu2v"]
 albedo_texture = ExtResource("1_m1ybr")
@@ -20,13 +36,21 @@ material = SubResource("StandardMaterial3D_1r2g6")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grvvb"]
 
-[sub_resource type="Environment" id="Environment_1h03e"]
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.51
-ambient_light_energy = 2.27
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eu7l1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p1v5b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wygdx"]
+size = Vector3(0.691284, 0.336487, 0.248779)
 
 [node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eu7l1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.472551, -0.677091, 0.564131, 0, 0.64011, 0.768283, -0.881303, 0.363053, -0.302484, 0, 0, 0)
+shadow_enabled = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -48,28 +72,47 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("CapsuleShape3D_grvvb")
 
-[node name="RigidBody3D2" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.751494, 0.659739, 0, -0.659739, 0.751494, 0, 4.96958, 0)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D2"]
-mesh = SubResource("CapsuleMesh_kloao")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
-shape = SubResource("CapsuleShape3D_grvvb")
-
-[node name="RigidBody3D3" type="RigidBody3D" parent="."]
-transform = Transform3D(-0.258819, -0.637259, 0.725888, 0, 0.751494, 0.659739, -0.965926, 0.170753, -0.194501, 0, 6.82191, -1.01015)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D3"]
-mesh = SubResource("CapsuleMesh_kloao")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3"]
-shape = SubResource("CapsuleShape3D_grvvb")
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3.45455, 1.45573, 3.80898)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1h03e")
+[node name="Dude" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
+
+[node name="Graphics" type="Node3D" parent="Dude"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Dude/Graphics"]
+mesh = SubResource("CapsuleMesh_eu7l1")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Dude"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dude"]
+shape = SubResource("CapsuleShape3D_p1v5b")
+
+[node name="MoveComponent" type="Node3D" parent="Dude"]
+script = ExtResource("2_js7pq")
+_moveAccel = null
+_maxSpeed = null
+_jumpForce = null
+_gravity = null
+
+[node name="PossessionComponent" type="Node3D" parent="Dude"]
+
+[node name="Rat" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
+
+[node name="Graphics" type="Node3D" parent="Rat"]
+
+[node name="rat" parent="Rat/Graphics" instance=ExtResource("3_bcbcq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Rat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.236099)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
+shape = SubResource("BoxShape3D_wygdx")
+
+[node name="PlayerConsciousness" type="Node3D" parent="."]
+script = ExtResource("3_js7pq")
