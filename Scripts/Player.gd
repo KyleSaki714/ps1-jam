@@ -2,6 +2,8 @@ extends Node3D
 
 class_name PlayerCore
 
+@onready var _testVisualizer = preload("res://Components/TestViz.tscn")
+
 @export var _moveComponent : MoveComponent
 #signal input_info
 
@@ -69,15 +71,27 @@ func _input(event: InputEvent) -> void:
 		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
 		#print(type_string(typeof(event.relative)))
 	
-	#if event is InputEventKey and event.pressed:
-		#if event.scancode in hotkeys:
-			#weapon_manager.switch_to_weapon_slot(hotkeys[event.scancode])
-	#if event is InputEventMouseButton and event.pressed:
-		#if event.button_index == MOUSE_BUTTON_LEFT
-		#if event.button_index == BUTTON_WHEEL_DOWN:
-			#weapon_manager.switch_to_next_weapon()
-		#if event.button_index == BUTTON_WHEEL_UP:
-			#weapon_manager.switch_to_last_weapon()
+	if Input.is_action_just_pressed("interact"):
+		#print("click")
+		# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
+		var spaceState = get_world_3d().direct_space_state
+		# get the camera's forward vector in global space
+		var cameraPos = _moveComponent._camera.global_position
+		var cameraDir = _moveComponent._camera.transform.basis.z * -1
+		var secondCameraPos = cameraDir * 5 + cameraPos
+		
+		var testVizInst = _testVisualizer.instantiate()
+		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst)
+		testVizInst.global_position = cameraPos
+
+		var testVizInst2 = _testVisualizer.instantiate()
+		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
+		testVizInst2.global_position = secondCameraPos
+		
+		var query = PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b10, [self.get_parent_node_3d().get_rid()]) # 20 is distance
+		var result = spaceState.intersect_ray(query)
+		if !result.is_empty():
+			print(result["collider"])
 	
 
 func capture_mouse():

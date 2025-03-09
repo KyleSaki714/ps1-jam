@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=18 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
 [ext_resource type="PackedScene" uid="uid://ckqqd2p6gtoo1" path="res://assets/rat.glb" id="3_bcbcq"]
 [ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="3_eu7l1"]
 [ext_resource type="Script" uid="uid://cilw0cimmcybd" path="res://Scripts/Player.gd" id="3_js7pq"]
+[ext_resource type="PackedScene" uid="uid://7303x0uj5nn0" path="res://Components/TestViz.tscn" id="5_eu7l1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -77,6 +78,7 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 
 [node name="Dude" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
+collision_layer = 3
 
 [node name="Graphics" type="Node3D" parent="Dude"]
 
@@ -98,6 +100,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
 
 [node name="Rat" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
+collision_layer = 3
 
 [node name="Graphics" type="Node3D" parent="Rat"]
 
@@ -123,3 +126,6 @@ _camera = NodePath("../Camera3D")
 _moveAccel = 5
 _maxSpeed = 20
 _jumpForce = 5
+
+[node name="MeshInstance3D" parent="." instance=ExtResource("5_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725598, 0)
