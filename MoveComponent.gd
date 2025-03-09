@@ -31,13 +31,13 @@ func init(_body_to_move : CharacterBody3D):
 func set_move_vec(dir : int):
 	match dir:
 		0:
-			_moveVec += Vector3.FORWARD
+			_moveVec -= _bodyToMove.transform.basis.z
 		1: 
-			_moveVec += Vector3.BACK
+			_moveVec += _bodyToMove.transform.basis.z
 		2:
-			_moveVec += Vector3.LEFT
+			_moveVec -= _bodyToMove.transform.basis.x
 		3:
-			_moveVec += Vector3.RIGHT
+			_moveVec += _bodyToMove.transform.basis.x
 		_:
 			_moveVec = Vector3.ZERO
 	_moveVec = _moveVec.normalized()
