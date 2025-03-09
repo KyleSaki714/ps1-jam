@@ -120,8 +120,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x *= 0.4
 		velocity.z *= 0.4 
 	
-	print(velocity.x)
-	
 	# Use velocity to actually move
 	move_and_slide()
 
@@ -219,4 +217,3 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
-current = true

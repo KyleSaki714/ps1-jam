@@ -7,8 +7,10 @@ class_name CorePlayer
 
 @export var _mouseSens = 0.5
 
-#func _ready():
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+var _mouseCaptured = false
+
+func _ready():
+	capture_mouse()
 
 func _process(delta: float) -> void:
 	var move_vec : Vector3
@@ -28,6 +30,8 @@ func _process(delta: float) -> void:
 		_moveComponent.set_jump(true)
 	else:
 		_moveComponent.set_jump(false)
+	if Input.is_action_pressed("pause"):
+		release_mouse()
 	#if (Input.is_action_pressed("interact")):
 		# TODO: interacting, transfer control to rat
 		#pass
@@ -35,11 +39,11 @@ func _process(delta: float) -> void:
 	#emit_signal("input_info", move_vec)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		_moveComponent.set_mouse_motion(event, _mouseSens)
-		#print(event.relative)
-	else:
-		_moveComponent.clear_mouse_motion()
+	if _mouseCaptured and event is InputEventMouseMotion:
+		#print("call mouse motion")
+		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
+		#print(type_string(typeof(event.relative)))
+
 	#if event is InputEventKey and event.pressed:
 		#if event.scancode in hotkeys:
 			#weapon_manager.switch_to_weapon_slot(hotkeys[event.scancode])
@@ -50,3 +54,11 @@ func _input(event: InputEvent) -> void:
 		#if event.button_index == BUTTON_WHEEL_UP:
 			#weapon_manager.switch_to_last_weapon()
 	
+
+func capture_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_mouseCaptured = true
+
+func release_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_mouseCaptured = false
