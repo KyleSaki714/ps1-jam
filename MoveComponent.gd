@@ -3,6 +3,7 @@ extends Node3D
 class_name MoveComponent
 
 @export var _bodyToMove : CharacterBody3D = null
+@export var _camera : Camera3D = null
 
 @export var _moveAccel = 2
 @export var _maxSpeed = 10
@@ -54,16 +55,19 @@ func set_jump(pressedJump: bool):
 	_pressedJump = pressedJump
 
 func _physics_process(delta: float) -> void:
+	if _bodyToMove == null or _camera == null:
+		push_error("_bodyToMove or _camera is null for MoveComponent!")
+		return
 	if frozen:
 		return
-	
+
 	# --- Mouse Motion ---
 	#print(_mouseMotion.relative.length())
 	_bodyToMove.rotation_degrees.y -= _mouseSens * _mouseMotion.x
 	#print(_bodyToMove.rotation_degrees.y)
-	$Camera3D.rotation_degrees.x -= _mouseSens * _mouseMotion.y
+	_camera.rotation_degrees.x -= _mouseSens * _mouseMotion.y
 	#print($Camera3D.rotation_degrees.x)
-	$Camera3D.rotation_degrees.x = clamp($Camera3D.rotation_degrees.x, -90, 90)
+	_camera.rotation_degrees.x = clamp(_camera.rotation_degrees.x, -90, 90)
 
 	clear_mouse_motion()
 

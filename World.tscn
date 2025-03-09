@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=17 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
-[ext_resource type="Script" uid="uid://cpatb03o8i346" path="res://MoveComponent.gd" id="2_js7pq"]
 [ext_resource type="PackedScene" uid="uid://ckqqd2p6gtoo1" path="res://assets/rat.glb" id="3_bcbcq"]
+[ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="3_eu7l1"]
 [ext_resource type="Script" uid="uid://cilw0cimmcybd" path="res://Scripts/Player.gd" id="3_js7pq"]
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="5_eu7l1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -88,20 +87,14 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Dude"]
 shape = SubResource("CapsuleShape3D_p1v5b")
 
-[node name="PlayerConsciousness" type="Node3D" parent="Dude" node_paths=PackedStringArray("_moveComponent")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83403, -1.0749, 0.13811)
-script = ExtResource("3_js7pq")
-_moveComponent = NodePath("../MoveComponent")
-
-[node name="MoveComponent" type="Node3D" parent="Dude" node_paths=PackedStringArray("_bodyToMove")]
-script = ExtResource("2_js7pq")
+[node name="MoveComponent" parent="Dude" node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("3_eu7l1")]
 _bodyToMove = NodePath("..")
-
-[node name="Camera3D" type="Camera3D" parent="Dude/MoveComponent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
-current = true
+_camera = NodePath("../Camera3D")
 
 [node name="PossessionComponent" type="Node3D" parent="Dude"]
+
+[node name="Camera3D" type="Camera3D" parent="Dude"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
 
 [node name="Rat" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
@@ -113,10 +106,20 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 
 [node name="Camera3D" type="Camera3D" parent="Rat"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.236099)
+current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rat"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
 shape = SubResource("BoxShape3D_wygdx")
 
-[node name="ProtoController" parent="." instance=ExtResource("5_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57219, 0, -1.27729)
+[node name="PlayerCore" type="Node3D" parent="Rat" node_paths=PackedStringArray("_moveComponent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10221, 0, 0)
+script = ExtResource("3_js7pq")
+_moveComponent = NodePath("../MoveComponent")
+
+[node name="MoveComponent" parent="Rat" node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("3_eu7l1")]
+_bodyToMove = NodePath("..")
+_camera = NodePath("../Camera3D")
+_moveAccel = 5
+_maxSpeed = 20
+_jumpForce = 5

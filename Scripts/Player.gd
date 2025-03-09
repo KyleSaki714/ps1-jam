@@ -15,7 +15,6 @@ func _ready():
 func _process(delta: float) -> void:
 	var move_vec : Vector3
 	if _moveComponent == null:
-		_moveComponent.set_move_vec(-1)
 		return
 	
 	if (Input.is_action_pressed("move_forward")):
@@ -39,6 +38,10 @@ func _process(delta: float) -> void:
 	#emit_signal("input_info", move_vec)
 
 func _input(event: InputEvent) -> void:
+	if _moveComponent == null:
+		push_error("_moveComponent is null for PlayerCore!")
+		return
+	
 	if _mouseCaptured and event is InputEventMouseMotion:
 		#print("call mouse motion")
 		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
