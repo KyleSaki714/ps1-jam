@@ -86,16 +86,19 @@ skeleton = NodePath("../..")
 
 [node name="Camera3D" type="Camera3D" parent="Dude"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
+current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Dude"]
 shape = SubResource("CapsuleShape3D_p1v5b")
 
-[node name="MoveComponent" type="Node3D" parent="Dude"]
+[node name="PlayerConsciousness" type="Node3D" parent="Dude" node_paths=PackedStringArray("_moveComponent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83403, -1.0749, 0.13811)
+script = ExtResource("3_js7pq")
+_moveComponent = NodePath("../MoveComponent")
+
+[node name="MoveComponent" type="Node3D" parent="Dude" node_paths=PackedStringArray("_bodyToMove")]
 script = ExtResource("2_js7pq")
-_moveAccel = null
-_maxSpeed = null
-_jumpForce = null
-_gravity = null
+_bodyToMove = NodePath("..")
 
 [node name="PossessionComponent" type="Node3D" parent="Dude"]
 
@@ -113,6 +116,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.2360
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rat"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
 shape = SubResource("BoxShape3D_wygdx")
-
-[node name="PlayerConsciousness" type="Node3D" parent="."]
-script = ExtResource("3_js7pq")

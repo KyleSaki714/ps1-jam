@@ -1,6 +1,8 @@
 extends Node3D
 
-var _bodyToMove : CharacterBody3D = null
+class_name MoveComponent
+
+@export var _bodyToMove : CharacterBody3D = null
 
 @export var _moveAccel = 4
 @export var _maxSpeed = 25
@@ -31,9 +33,26 @@ func _physics_process(delta: float) -> void:
 	var cur_move_vec = _moveVec
 	
 	_velocity += (_moveAccel * cur_move_vec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (_gravity * Vector3.DOWN) * delta
+	_bodyToMove.set_velocity(_velocity)
+	_bodyToMove.move_and_slide()
 	
-	_velocity = _bodyToMove.move_and_collide()
-	
-	
-	
-	
+	var grounded = _bodyToMove.is_on_floor()
+	if grounded:
+		_velocity.y -= 0.01
+	if grounded and _pressedJump:
+		_velocity.y = _jumpForce
+	_pressedJump = false
+
+func freeze():
+	frozen = true
+
+func unfreeze():
+	frozen = false
+
+#func on_input_recieved(move_vec: Vector3):
+	#set_move_vec(move_vec)
+	#print(_moveVec)
+#
+#func set_player(plr: CorePlayer):
+	#_corePlayer = plr
+	#connect("input_info", on_input_recieved)
