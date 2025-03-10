@@ -65,19 +65,15 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# --- Mouse Motion ---
-	#print(_mouseMotion.relative.length())
 	_bodyToMove.rotation_degrees.y -= _mouseSens * _mouseMotion.x
-	#print(_bodyToMove.rotation_degrees.y)
 	_camera.rotation_degrees.x -= _mouseSens * _mouseMotion.y
-	#print($Camera3D.rotation_degrees.x)
 	_camera.rotation_degrees.x = clamp(_camera.rotation_degrees.x, -90, 90)
-
 	clear_mouse_motion()
 
 	# --- Movement ---
 	var grounded = _bodyToMove.is_on_floor()
+	# if player is already grounded, much smaller gravity will be applied
 	if grounded:
-		#_velocity.y -= 0.01
 		_velocity += (_moveAccel * _moveVec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (0.01 * Vector3.DOWN) * delta
 	else:
 		_velocity += (_moveAccel * _moveVec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (_gravity * Vector3.DOWN) * delta
@@ -91,19 +87,8 @@ func _physics_process(delta: float) -> void:
 		_velocity.y = _jumpForce
 	_pressedJump = false
 
-
-
-
 func freeze():
 	frozen = true
 
 func unfreeze():
 	frozen = false
-
-#func on_input_recieved(move_vec: Vector3):
-	#set_move_vec(move_vec)
-	#print(_moveVec)
-#
-#func set_player(plr: CorePlayer):
-	#_corePlayer = plr
-	#connect("input_info", on_input_recieved)
