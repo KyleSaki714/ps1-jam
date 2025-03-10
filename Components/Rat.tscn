@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://vly1dwti5hdy"]
+[gd_scene load_steps=9 format=4 uid="uid://vly1dwti5hdy"]
 
 [ext_resource type="Material" uid="uid://dhf83v7v03d8r" path="res://shaders/RatMaterial.tres" id="1_apg4c"]
 [ext_resource type="Texture2D" uid="uid://b8qe8hymoa3bj" path="res://assets/rat_rat_rat_texture_64.png" id="1_bo4j8"]
@@ -49,8 +49,6 @@ shadow_mesh = SubResource("ArrayMesh_7bvdb")
 [sub_resource type="BoxShape3D" id="BoxShape3D_wygdx"]
 size = Vector3(0.691284, 0.336487, 0.248779)
 
-[sub_resource type="BoxMesh" id="BoxMesh_bo4j8"]
-
 [node name="Rat" type="CharacterBody3D"]
 collision_layer = 3
 
@@ -79,7 +77,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.2360
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
 shape = SubResource("BoxShape3D_wygdx")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.60498, 0, 0)
-mesh = SubResource("BoxMesh_bo4j8")
