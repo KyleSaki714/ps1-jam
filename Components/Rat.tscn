@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://vly1dwti5hdy"]
+
+[ext_resource type="PackedScene" uid="uid://ckqqd2p6gtoo1" path="res://assets/rat.glb" id="1_bo4j8"]
+[ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="2_xvbv6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wygdx"]
+size = Vector3(0.691284, 0.336487, 0.248779)
+
+[node name="Rat" type="CharacterBody3D"]
+collision_layer = 3
+
+[node name="Graphics" type="Node3D" parent="."]
+
+[node name="rat" parent="Graphics" instance=ExtResource("1_bo4j8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("2_xvbv6")]
+_bodyToMove = NodePath("..")
+_camera = NodePath("../Camera3D")
+_moveAccel = 5
+_maxSpeed = 20
+_jumpForce = 5
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.236099)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
+shape = SubResource("BoxShape3D_wygdx")

@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=17 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
-[ext_resource type="PackedScene" uid="uid://ckqqd2p6gtoo1" path="res://assets/rat.glb" id="3_bcbcq"]
 [ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="3_eu7l1"]
 [ext_resource type="Script" uid="uid://cilw0cimmcybd" path="res://Scripts/Player.gd" id="3_js7pq"]
+[ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://7303x0uj5nn0" path="res://Components/TestViz.tscn" id="5_eu7l1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
@@ -41,9 +41,6 @@ material = SubResource("StandardMaterial3D_1r2g6")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p1v5b"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_wygdx"]
-size = Vector3(0.691284, 0.336487, 0.248779)
-
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -57,7 +54,6 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-visible = false
 mesh = SubResource("BoxMesh_h1uk5")
 skeleton = NodePath("../..")
 
@@ -87,46 +83,32 @@ collision_layer = 3
 mesh = SubResource("CapsuleMesh_eu7l1")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Dude"]
-shape = SubResource("CapsuleShape3D_p1v5b")
-
 [node name="MoveComponent" parent="Dude" node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("3_eu7l1")]
 _bodyToMove = NodePath("..")
 _camera = NodePath("../Camera3D")
 
-[node name="PossessionComponent" type="Node3D" parent="Dude"]
-
 [node name="Camera3D" type="Camera3D" parent="Dude"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
-
-[node name="Rat" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
-collision_layer = 3
-
-[node name="Graphics" type="Node3D" parent="Rat"]
-
-[node name="rat" parent="Rat/Graphics" instance=ExtResource("3_bcbcq")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Rat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.236099)
 current = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Rat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0209351, 0.187347, -0.00964355)
-shape = SubResource("BoxShape3D_wygdx")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dude"]
+shape = SubResource("CapsuleShape3D_p1v5b")
 
-[node name="PlayerCore" type="Node3D" parent="Rat" node_paths=PackedStringArray("_moveComponent")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10221, 0, 0)
+[node name="PossessionComponent" type="Node3D" parent="Dude"]
+
+[node name="PlayerCore" type="Node3D" parent="Dude" node_paths=PackedStringArray("_moveComponent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83403, -1.0749, 0.13811)
 script = ExtResource("3_js7pq")
 _moveComponent = NodePath("../MoveComponent")
 
-[node name="MoveComponent" parent="Rat" node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("3_eu7l1")]
-_bodyToMove = NodePath("..")
-_camera = NodePath("../Camera3D")
-_moveAccel = 5
-_maxSpeed = 20
-_jumpForce = 5
+[node name="Rat" parent="." instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
+
+[node name="Rat2" parent="." instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 0)
+
+[node name="Rat3" parent="." instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85147, 0, 0)
 
 [node name="MeshInstance3D" parent="." instance=ExtResource("5_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725598, 0)

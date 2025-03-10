@@ -75,15 +75,18 @@ func _physics_process(delta: float) -> void:
 	clear_mouse_motion()
 
 	# --- Movement ---
-	_velocity += (_moveAccel * _moveVec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (_gravity * Vector3.DOWN) * delta
+	var grounded = _bodyToMove.is_on_floor()
+	if grounded:
+		#_velocity.y -= 0.01
+		_velocity += (_moveAccel * _moveVec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (0.01 * Vector3.DOWN) * delta
+	else:
+		_velocity += (_moveAccel * _moveVec) - (_velocity * Vector3(_drag, 0.0, _drag)) + (_gravity * Vector3.DOWN) * delta
+		
 	_bodyToMove.set_velocity(_velocity)
 	_bodyToMove.move_and_slide()
 	
 	_moveVec = Vector3.ZERO
 	
-	var grounded = _bodyToMove.is_on_floor()
-	if grounded:
-		_velocity.y -= 0.01
 	if grounded and _pressedJump:
 		_velocity.y = _jumpForce
 	_pressedJump = false

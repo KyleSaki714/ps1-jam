@@ -7,6 +7,7 @@ class_name PlayerCore
 @export var _moveComponent : MoveComponent
 #signal input_info
 
+@export var _transferDistance = 8
 @export var _mouseSens = 0.5
 
 var _mouseCaptured = false
@@ -45,20 +46,22 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (Input.is_action_just_pressed("debug_transfer_dude")):
 		print("transfer to dude")
 		var dude = get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/Dude")
-		if dude != null:
-			_moveComponent._camera.current = false
-			reparent(dude)
-			_moveComponent = dude.get_node_or_null("MoveComponent")
-			_moveComponent._camera.current = true
+		transferPlayer(dude)
+		#if dude != null:
+			#_moveComponent._camera.current = false
+			#reparent(dude)
+			#_moveComponent = dude.get_node_or_null("MoveComponent")
+			#_moveComponent._camera.current = true
 	if (Input.is_action_just_pressed("debug_transfer_rat")):
 		print("transfer to rat")
 		var rat = get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/Rat")
-		if rat != null:
-			# deactivate old camera
-			_moveComponent._camera.current = false
-			reparent(rat)
-			_moveComponent = rat.get_node_or_null("MoveComponent")
-			_moveComponent._camera.current = true
+		transferPlayer(rat)
+		#if rat != null:
+			## deactivate old camera
+			#_moveComponent._camera.current = false
+			#reparent(rat)
+			#_moveComponent = rat.get_node_or_null("MoveComponent")
+			#_moveComponent._camera.current = true
 		
 
 func _input(event: InputEvent) -> void:
@@ -90,11 +93,11 @@ func _input(event: InputEvent) -> void:
 		# apply basis vectors transformation thanks to ChatGPT https://chatgpt.com/share/67ce3226-c2e4-8001-b540-97d23755dd49
 		var basis = Basis(Vector3.UP, yRot) * Basis(Vector3.RIGHT, xRot) # apply yaw, then pitch
 		var rayDir = basis * Vector3.FORWARD
-		var secondCameraPos = rayDir * 5 + cameraPos
+		var secondCameraPos = rayDir * _transferDistance + cameraPos
 		
-		var testVizInst = _testVisualizer.instantiate()
-		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst)
-		testVizInst.global_position = cameraPos
+		#var testVizInst = _testVisualizer.instantiate()
+		#get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst)
+		#testVizInst.global_position = cameraPos
 
 		var testVizInst2 = _testVisualizer.instantiate()
 		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
@@ -104,6 +107,7 @@ func _input(event: InputEvent) -> void:
 		var result = spaceState.intersect_ray(query)
 		if !result.is_empty():
 			print(result["collider"])
+			transferPlayer(result["collider"])
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -112,3 +116,22 @@ func capture_mouse():
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_mouseCaptured = false
+	
+func transferPlayer(newBody : CharacterBody3D):
+	if newBody is not CharacterBody3D:
+		push_error("new body is not CharacterBody3D!")
+		return
+	var mc = newBody.get_node_or_null("MoveComponent")
+	var cam = newBody.get_node_or_null("Camera3D")
+	if mc == null or cam == null:
+		push_error("new body does not have a MoveComponent!")
+		return
+	
+	
+	# deactivate old camera
+	_moveComponent._camera.current = false
+	reparent(newBody)
+	_moveComponent = newBody.get_node_or_null("MoveComponent")
+	_moveComponent._camera.current = true
+	
+	
