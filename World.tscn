@@ -50,8 +50,20 @@ environment = SubResource("Environment_eu7l1")
 transform = Transform3D(-0.472551, -0.677091, 0.564131, 0, 0.64011, 0.768283, -0.881303, 0.363053, -0.302484, 0, 0, 0)
 shadow_enabled = true
 
+[node name="Platforms" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Platforms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.17875, 2.96237, 0.390015)
+size = Vector3(1, 6.92474, 13.238)
+
+[node name="floor" type="CSGBox3D" parent="Platforms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(50, 1, 50)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_h1uk5")
@@ -105,10 +117,10 @@ _moveComponent = NodePath("../MoveComponent")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
 
 [node name="Rat2" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)
 
 [node name="Rat3" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85147, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85147, 0, 8.16304)
 
 [node name="MeshInstance3D" parent="." instance=ExtResource("5_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725598, 0)
