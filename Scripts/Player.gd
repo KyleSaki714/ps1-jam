@@ -77,8 +77,20 @@ func _input(event: InputEvent) -> void:
 		var spaceState = get_world_3d().direct_space_state
 		# get the camera's forward vector in global space
 		var cameraPos = _moveComponent._camera.global_position
-		var cameraDir = _moveComponent._camera.transform.basis.z * -1
-		var secondCameraPos = cameraDir * 5 + cameraPos
+		#var rayCastDir = ((_moveComponent._camera.transform.basis.z * -1) + (get_parent_node_3d().transform.basis.z * -1)).normalized()
+		#print(_moveComponent._camera.transform.basis.z * -1)
+		var xRot = deg_to_rad(_moveComponent._camera.rotation_degrees.x) # Pitch
+		#print(get_parent_node_3d().transform.basis.z * -1)
+		var yRot = deg_to_rad(get_parent_node_3d().rotation_degrees.y) # yaw
+		
+		#var rayDir = Vector3(deg_to_rad(xRot), deg_to_rad(yRot), 0.0).normalized()
+		#print(rayDir)
+		 
+		
+		# apply basis vectors transformation thanks to ChatGPT https://chatgpt.com/share/67ce3226-c2e4-8001-b540-97d23755dd49
+		var basis = Basis(Vector3.UP, yRot) * Basis(Vector3.RIGHT, xRot) # apply yaw, then pitch
+		var rayDir = basis * Vector3.FORWARD
+		var secondCameraPos = rayDir * 5 + cameraPos
 		
 		var testVizInst = _testVisualizer.instantiate()
 		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst)
@@ -92,7 +104,6 @@ func _input(event: InputEvent) -> void:
 		var result = spaceState.intersect_ray(query)
 		if !result.is_empty():
 			print(result["collider"])
-	
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
