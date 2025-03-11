@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dckcr72udmyw0"]
 
 [ext_resource type="Shader" uid="uid://cnxv016ol1yfe" path="res://ps1-postprocessing-grau-godotshadersdotcom.gdshader" id="1_mmcge"]
-[ext_resource type="PackedScene" uid="uid://b1shtyjdx7je7" path="res://World.tscn" id="2_w8ewg"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="3_gcxxy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iqr2y"]
 shader = ExtResource("1_mmcge")
@@ -15,9 +15,84 @@ material = SubResource("ShaderMaterial_iqr2y")
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.322266, 0.946649, 4.13793e-08, 0, -4.37114e-08, 1, 0.946649, 0.322266, 1.40867e-08, 0, 20, 0)
+shadow_enabled = true
+
 [node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="World" parent="SubViewport" instance=ExtResource("2_w8ewg")]
+[node name="Intro Room" type="Node3D" parent="SubViewport"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="SubViewport/Intro Room"]
+use_collision = true
+
+[node name="floor" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(11.1189, 0, 0, 0, 0.505217, 0, 0, 0, 22.5958, -0.299999, -0.2, 2.91524)
+size = Vector3(1.6, 1, 0.741699)
+
+[node name="ceiling" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(11.1189, 0, 0, 0, 0.505217, 0, 0, 0, 22.5958, -0.245302, 11.6104, 2.9358)
+visible = false
+size = Vector3(1.6, 1, 0.741699)
+
+[node name="ceiling2" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(7.77173, 0, 0, 0, 0.35313, 0, 0, 0, 15.7937, -0.408003, 10.8241, 15.027)
+size = Vector3(0.95813, 1, 0.395203)
+
+[node name="lightroom floor" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(7.77173, 0, 0, 0, 0.35313, 0, 0, 0, 15.7937, -0.408003, 6.63174, 15.027)
+size = Vector3(0.95813, 1, 0.395203)
+
+[node name="wall" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(0.00872402, -0.504693, 0, 11.1074, 0.0003964, 0, 0, 0, 22.8998, -8.83306, 5.77199, 2.95156)
+size = Vector3(1.09778, 1, 0.740723)
+
+[node name="wall 2" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(0.00875604, -0.506546, 0, 11.1481, 0.000397855, 0, 0, 0, 23.1861, 8.15987, 5.70138, 3.08625)
+size = Vector3(1.08936, 1, 0.731323)
+
+[node name="lightroom wall" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(0.00884499, -0.511692, 0, 11.2614, 0.000401896, 0, 0, 0, 14.7856, 3.09777, 8.56102, 14.8273)
+size = Vector3(0.402222, 1, 0.453552)
+
+[node name="lightroom wall3" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(2.1517e-14, 2.23668e-08, 14.7856, 11.2614, -2.23668e-08, 0, 4.92251e-07, 0.511692, -6.463e-07, -0.343904, 8.56102, 17.9065)
+size = Vector3(0.402222, 1, 0.5)
+
+[node name="lightroom wall2" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(0.00874786, -0.506073, 0, 11.1377, 0.000397483, 0, 0, 0, 14.6232, -3.86714, 8.56102, 14.8058)
+size = Vector3(0.402222, 1, 0.450623)
+
+[node name="wall 3" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 17.7718, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -7.76829e-07, -0.522094, 5.71726, -5.32127)
+size = Vector3(1.07959, 1, 1)
+
+[node name="wall 4" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 11.1074, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -4.85518e-07, -5.86545, 5.22896, 11.3459)
+size = Vector3(1, 1, 0.5)
+
+[node name="wall 5" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 11.1074, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -4.85518e-07, 5.31561, 5.22896, 11.3459)
+size = Vector3(1, 1, 0.6)
+
+[node name="wall 7" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(6.81554e-15, 2.20609e-08, 11.1074, 3.56706, -2.20609e-08, 0, 1.55921e-07, 0.504694, -4.85518e-07, -0.762738, 3.26777, 11.3459)
+size = Vector3(2.07031, 1, 1)
+
+[node name="wall 6" type="CSGBox3D" parent="SubViewport/Intro Room/CSGCombiner3D"]
+transform = Transform3D(1.40425e-14, 2.21171e-08, 11.1357, 7.34945, -2.21171e-08, 0, 3.21255e-07, 0.50598, -4.86756e-07, -0.3431, 10.7973, 11.3582)
+size = Vector3(0.292114, 1, 1)
+
+[node name="ProtoController" parent="SubViewport/Intro Room" instance=ExtResource("3_gcxxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1, 0)
+input_left = "move_left"
+input_right = "move_right"
+input_forward = "move_foward"
+input_back = "move_back"
+input_jump = "jump"
+
+[node name="Interrogation room" type="Node3D" parent="SubViewport"]
+visible = false
