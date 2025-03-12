@@ -8,6 +8,7 @@ class_name PlayerCore
 @export var _mouseSens = 0.5
 
 var _mouseCaptured = false
+var _currentInteractObject = null # the object the player is currently looking at
 
 func _ready():
 	capture_mouse()
@@ -31,17 +32,19 @@ func _process(delta: float) -> void:
 		_moveComponent.set_jump(false)
 	if Input.is_action_pressed("pause"):
 		release_mouse()
-	#if (Input.is_action_pressed("interact")):
-		# TODO: interacting, transfer control to rat
-		#pass
+	if (Input.is_action_pressed("interact")):
+		if _currentInteractObject is CharacterBody3D:
+			transferPlayer(_currentInteractObject)
+			# TODO: make a cooldown for transferring control? 
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
 	var query = createRaycastQuery()
 	var spaceState = get_world_3d().direct_space_state
 	var result = spaceState.intersect_ray(query)
 	if !result.is_empty():
-		print(result["collider"])
-		transferPlayer(result["collider"])
+		_currentInteractObject = result["collider"]
+
+	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -65,8 +68,6 @@ func _input(event: InputEvent) -> void:
 	if _mouseCaptured and event is InputEventMouseMotion:
 		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
 	
-	if Input.is_action_just_pressed("interact"):
-		print("interact button pressed")
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
