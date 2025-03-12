@@ -74,9 +74,9 @@ func _input(event: InputEvent) -> void:
 		var secondCameraPos = rayDir * _transferDistance + cameraPos
 		
 		# DEBUG: view the farthest point player can reach
-		var testVizInst2 = _testVisualizer.instantiate()
-		get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
-		testVizInst2.global_position = secondCameraPos
+		#var testVizInst2 = _testVisualizer.instantiate()
+		#get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
+		#testVizInst2.global_position = secondCameraPos
 		
 		# create the raycast and intersect the ray
 		var query = PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b10, [self.get_parent_node_3d().get_rid()]) # 20 is distance

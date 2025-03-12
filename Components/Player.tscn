@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://bak1xq70vukg6"]
+
+[ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="1_uwk8q"]
+[ext_resource type="Texture2D" uid="uid://dmrahewbgsp87" path="res://assets/textures/crosshair16_dot.png" id="2_yrjoe"]
+[ext_resource type="Texture2D" uid="uid://ifia8n3uflj5" path="res://assets/textures/crosshair16.png" id="3_e02sh"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_eu7l1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p1v5b"]
+
+[node name="Dude" type="CharacterBody3D"]
+collision_layer = 3
+
+[node name="Graphics" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Graphics"]
+mesh = SubResource("CapsuleMesh_eu7l1")
+skeleton = NodePath("../..")
+
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("1_uwk8q")]
+_bodyToMove = NodePath("..")
+_camera = NodePath("../Camera3D")
+_jumpForce = 7
+_gravity = 25
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562925, 0)
+current = true
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_yrjoe")
+stretch_mode = 3
+
+[node name="Sprite3D" type="Sprite3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.46239)
+texture = ExtResource("3_e02sh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_p1v5b")
