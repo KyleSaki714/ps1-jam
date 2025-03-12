@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bj6ubcm5hu5jm"]
+
+[ext_resource type="Script" uid="uid://c2tfl2dl4blfy" path="res://Components/SceneTransitioner.gd" id="1_4b2o6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35mfd"]
+size = Vector3(2.00342, 1.42877, 1.65717)
+
+[sub_resource type="BoxMesh" id="BoxMesh_35mfd"]
+
+[node name="AirVent" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_4b2o6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.2573, 7.34507, -18.473)
+shape = SubResource("BoxShape3D_35mfd")
+
+[node name="Node3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.87002, 0, 0, 0, 1.39859, 0, 0, 0, 1.8489, -21.2773, 7.33668, -18.4021)
+mesh = SubResource("BoxMesh_35mfd")
+skeleton = NodePath("../..")

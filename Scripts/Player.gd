@@ -36,14 +36,22 @@ func _process(delta: float) -> void:
 		if _currentInteractObject is CharacterBody3D:
 			transferPlayer(_currentInteractObject)
 			# TODO: make a cooldown for transferring control? 
+		if _currentInteractObject is SceneTransitioner:
+			# for future reference I don't think StaticBody is supposed to be
+			# used like this, I think an Area3D is better.
+			_currentInteractObject.sceneChange()
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
 	var query = createRaycastQuery()
-	var spaceState = get_world_3d().direct_space_state
+	
+	var world = get_world_3d()
+	if world == null:
+		return
+	var spaceState = world.direct_space_state
 	var result = spaceState.intersect_ray(query)
 	if !result.is_empty():
 		_currentInteractObject = result["collider"]
-
+		print(_currentInteractObject)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -118,5 +126,5 @@ func createRaycastQuery() -> PhysicsRayQueryParameters3D:
 	#testVizInst2.global_position = secondCameraPos
 	
 	# create the raycast and intersect the ray
-	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b10, [self.get_parent_node_3d().get_rid()]) # 20 is distance
+	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b110, [self.get_parent_node_3d().get_rid()]) # 20 is distance
 	
