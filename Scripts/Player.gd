@@ -34,6 +34,14 @@ func _process(delta: float) -> void:
 	#if (Input.is_action_pressed("interact")):
 		# TODO: interacting, transfer control to rat
 		#pass
+	
+	# --- RAYCAST FOR INTERACTION SYSTEM ---
+	var query = createRaycastQuery()
+	var spaceState = get_world_3d().direct_space_state
+	var result = spaceState.intersect_ray(query)
+	if !result.is_empty():
+		print(result["collider"])
+		transferPlayer(result["collider"])
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -58,32 +66,7 @@ func _input(event: InputEvent) -> void:
 		_moveComponent.set_mouse_motion(event.relative, _mouseSens)
 	
 	if Input.is_action_just_pressed("interact"):
-		# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
-		var spaceState = get_world_3d().direct_space_state
-		# get the camera's position in global space
-		var cameraPos = _moveComponent._camera.global_position
-		# using the X rotation from the camera, and the Y rotation from the current CharacterBody3D,
-		# create the direction vector (rayDir) that points in the direction of the camera.  
-		var xRot = deg_to_rad(_moveComponent._camera.rotation_degrees.x) # Pitch
-		var yRot = deg_to_rad(get_parent_node_3d().rotation_degrees.y) # Yaw
-		# apply basis vectors transformation
-		# thanks to ChatGPT https://chatgpt.com/share/67ce3226-c2e4-8001-b540-97d23755dd49
-		var basis = Basis(Vector3.UP, yRot) * Basis(Vector3.RIGHT, xRot) # apply yaw, then pitch
-		var rayDir = basis * Vector3.FORWARD
-		# get the 2nd point _transferDistance units away from cameraPos
-		var secondCameraPos = rayDir * _transferDistance + cameraPos
-		
-		# DEBUG: view the farthest point player can reach
-		#var testVizInst2 = _testVisualizer.instantiate()
-		#get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
-		#testVizInst2.global_position = secondCameraPos
-		
-		# create the raycast and intersect the ray
-		var query = PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b10, [self.get_parent_node_3d().get_rid()]) # 20 is distance
-		var result = spaceState.intersect_ray(query)
-		if !result.is_empty():
-			print(result["collider"])
-			transferPlayer(result["collider"])
+		print("interact button pressed")
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -108,5 +91,31 @@ func transferPlayer(newBody : CharacterBody3D):
 	reparent(newBody)
 	_moveComponent = newBody.get_node_or_null("MoveComponent")
 	_moveComponent._camera.current = true
+
+# using a starting point, direction vector, and distance float, use
+# the camera and current body's rotation to create a raycast
+# that checks for collisions in front of the camera
+func createRaycastQuery() -> PhysicsRayQueryParameters3D:
+	# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
+
+	# get the camera's position in global space
+	var cameraPos = _moveComponent._camera.global_position
+	# using the X rotation from the camera, and the Y rotation from the current CharacterBody3D,
+	# create the direction vector (rayDir) that points in the direction of the camera.  
+	var xRot = deg_to_rad(_moveComponent._camera.rotation_degrees.x) # Pitch
+	var yRot = deg_to_rad(get_parent_node_3d().rotation_degrees.y) # Yaw
+	# apply basis vectors transformation
+	# thanks to ChatGPT https://chatgpt.com/share/67ce3226-c2e4-8001-b540-97d23755dd49
+	var basis = Basis(Vector3.UP, yRot) * Basis(Vector3.RIGHT, xRot) # apply yaw, then pitch
+	var rayDir = basis * Vector3.FORWARD
+	# get the 2nd point _transferDistance units away from cameraPos
+	var secondCameraPos = rayDir * _transferDistance + cameraPos
 	
+	# DEBUG: view the farthest point player can reach
+	#var testVizInst2 = _testVisualizer.instantiate()
+	#get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
+	#testVizInst2.global_position = secondCameraPos
+	
+	# create the raycast and intersect the ray
+	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b10, [self.get_parent_node_3d().get_rid()]) # 20 is distance
 	

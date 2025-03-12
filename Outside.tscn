@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://i3r2r3mfngh5"]
+[gd_scene load_steps=10 format=3 uid="uid://i3r2r3mfngh5"]
 
 [ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="1_f6ed7"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="2_i6qxv"]
@@ -17,6 +17,11 @@ background_mode = 2
 sky = SubResource("Sky_i6qxv")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35mfd"]
+size = Vector3(2.00342, 1.42877, 1.65717)
+
+[sub_resource type="BoxMesh" id="BoxMesh_35mfd"]
 
 [node name="Outside" type="Node3D"]
 
@@ -69,8 +74,12 @@ radius = 2.0
 height = 8.0
 
 [node name="Dumpster" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.3685, 2.0526, -19.4135)
-size = Vector3(4.21774, 2.85794, 3.06848)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.3685, 1.89128, -19.4135)
+size = Vector3(4.21774, 2.53529, 3.06848)
+
+[node name="CardboardBox" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.987019, 0, -0.160605, 0, 1, 0, 0.160605, 0, 0.987019, -18.1141, 1.1995, -19.1224)
+size = Vector3(1.73315, 1.45252, 1.97516)
 
 [node name="CustodianRoom" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5832, 6, -7.25684)
@@ -140,5 +149,20 @@ spot_angle = 32.1704
 
 [node name="Rat" parent="." instance=ExtResource("4_35mfd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0778, 0.51094, -3.83796)
+
+[node name="Interactables" type="Node3D" parent="."]
+
+[node name="AirVent" type="Area3D" parent="Interactables"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/AirVent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.2573, 7.34507, -18.473)
+shape = SubResource("BoxShape3D_35mfd")
+
+[node name="Node3D" type="MeshInstance3D" parent="Interactables/AirVent"]
+transform = Transform3D(1.87002, 0, 0, 0, 1.39859, 0, 0, 0, 1.8489, -21.2773, 7.33668, -18.4021)
+mesh = SubResource("BoxMesh_35mfd")
+skeleton = NodePath("../..")
 
 [editable path="Dude"]
