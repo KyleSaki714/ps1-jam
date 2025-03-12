@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=12 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
 [ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="2_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="3_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_eu7l1"]
-[ext_resource type="PackedScene" uid="uid://7303x0uj5nn0" path="res://Components/TestViz.tscn" id="5_eu7l1"]
+[ext_resource type="PackedScene" uid="uid://bakrb1fsbrkfo" path="res://Components/TestViz.tscn" id="5_eu7l1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,16 +18,6 @@ background_mode = 2
 sky = SubResource("Sky_js7pq")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwu2v"]
-albedo_texture = ExtResource("1_m1ybr")
-
-[sub_resource type="BoxMesh" id="BoxMesh_h1uk5"]
-material = SubResource("StandardMaterial3D_nwu2v")
-size = Vector3(50, 2, 50)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7stlb"]
-size = Vector3(50, 2, 50)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1r2g6"]
 albedo_texture = ExtResource("1_m1ybr")
@@ -65,17 +55,6 @@ size = Vector3(3.12195, 2.08301, 2.37097)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3863, 0.441805, -9.65273)
 size = Vector3(3.12195, 1.00342, 2.37097)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_h1uk5")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_7stlb")
-
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.751494, 0.659739, 0, -0.659739, 0.751494, 0, 2.31368, 0)
 
@@ -96,7 +75,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
 _moveComponent = NodePath("../MoveComponent")
 
 [node name="Rat" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.10221, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679857, 0, 2.07367)
 
 [node name="Rat2" parent="." instance=ExtResource("4_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)

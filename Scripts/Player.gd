@@ -2,9 +2,8 @@ extends Node3D
 
 class_name PlayerCore
 
-@onready var _testVisualizer = preload("res://Components/TestViz.tscn")
 @export var _moveComponent : MoveComponent
-@export var _transferDistance = 8 # the radius to reach rats to control
+@export var _transferDistance = 4 # the radius to reach rats to control
 @export var _mouseSens = 0.5
 
 var _mouseCaptured = false
@@ -51,7 +50,7 @@ func _process(delta: float) -> void:
 	var result = spaceState.intersect_ray(query)
 	if !result.is_empty():
 		_currentInteractObject = result["collider"]
-		print(_currentInteractObject)
+		#print(_currentInteractObject)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -119,11 +118,6 @@ func createRaycastQuery() -> PhysicsRayQueryParameters3D:
 	var rayDir = basis * Vector3.FORWARD
 	# get the 2nd point _transferDistance units away from cameraPos
 	var secondCameraPos = rayDir * _transferDistance + cameraPos
-	
-	# DEBUG: view the farthest point player can reach
-	#var testVizInst2 = _testVisualizer.instantiate()
-	#get_tree().root.get_node_or_null("SubViewportContainer/SubViewport/World/").add_child(testVizInst2)
-	#testVizInst2.global_position = secondCameraPos
 	
 	# create the raycast and intersect the ray
 	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b110, [self.get_parent_node_3d().get_rid()]) # 20 is distance
