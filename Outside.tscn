@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://i3r2r3mfngh5"]
+[gd_scene load_steps=11 format=3 uid="uid://i3r2r3mfngh5"]
 
 [ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="1_f6ed7"]
+[ext_resource type="PackedScene" uid="uid://b0uxtqjhmdo25" path="res://Models/research_lab_outside.tscn" id="1_re4b8"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="2_i6qxv"]
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="3_i6qxv"]
 [ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_35mfd"]
 [ext_resource type="PackedScene" uid="uid://bj6ubcm5hu5jm" path="res://Components/SceneTransitioner.tscn" id="5_3l551"]
+[ext_resource type="PackedScene" uid="uid://rk651xaeamlo" path="res://Models/researchlaboutside.blend" id="8_m5qbc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f6ed7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -28,79 +30,8 @@ environment = SubResource("Environment_35mfd")
 transform = Transform3D(0.89145, -0.348124, 0.290046, -0.22656, 0.211908, 0.950666, -0.392413, -0.913184, 0.110035, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-use_collision = true
-
-[node name="fence2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12782, 3.51257, -37.2708)
-size = Vector3(62.272, 6.35742, 0.5)
-
-[node name="fence3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -33.1357, 3.64777, -8.27082)
-size = Vector3(62.272, 6.35742, 0.5)
-
-[node name="fence4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 28.8616, 3.63385, -6.31167)
-size = Vector3(62.272, 6.35742, 0.5)
-
-[node name="fence" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29765, 3.67871, 22.5128)
-size = Vector3(62.272, 6.35742, 0.5)
-
-[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98941, 0, -5.26099)
-size = Vector3(75, 1, 75)
-
-[node name="Building2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.52217, 13.215, -15.5239)
-size = Vector3(23.277, 27, 27.0327)
-
-[node name="Building1" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88927, 12.5671, -4.15217)
-size = Vector3(34.4415, 25.8874, 27.0327)
-
-[node name="Building3" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3885, 14, 3.6332)
-radius = 9.52881
-height = 30.0
-
-[node name="chimney" type="CSGCylinder3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 29, -7)
-radius = 2.0
-height = 8.0
-
-[node name="Dumpster" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.3685, 1.89128, -19.4135)
-size = Vector3(4.21774, 2.53529, 3.06848)
-
-[node name="CardboardBox" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.987019, 0, -0.160605, 0, 1, 0, 0.160605, 0, 0.987019, -18.1141, 1.1995, -19.1224)
-size = Vector3(1.73315, 1.45252, 1.97516)
-
-[node name="CustodianRoom" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5832, 6, -7.25684)
-operation = 2
-size = Vector3(11.8336, 11, 18.4863)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9172, 1.60314, -2.95793)
-size = Vector3(2.80697, 2.32434, 3.297)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16.222, 2.64871, 0.698557)
-size = Vector3(2.807, 4.86143, 4.578)
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.0719, 5.44526, -4.14969)
-size = Vector3(3.1633, 0.521899, 5.48529)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6926, 7.77452, -14.9981)
-size = Vector3(8.07402, 0.939087, 3.4158)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.939692, -0.34202, 0, 0.34202, 0.939692, -21.7832, 7.1001, -9.74703)
-size = Vector3(1.21364, 0.230164, 7.80948)
+[node name="ResearchLabOutside" parent="." instance=ExtResource("1_re4b8")]
+visible = false
 
 [node name="Dude" parent="." instance=ExtResource("1_f6ed7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4357, 2.26075, -25.7738)
@@ -149,5 +80,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0778, 0.51094, -3.83796)
 [node name="Interactables" type="Node3D" parent="."]
 
 [node name="AirVent" parent="Interactables" instance=ExtResource("5_3l551")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="researchlaboutside2" parent="." instance=ExtResource("8_m5qbc")]
 
 [editable path="Dude"]
