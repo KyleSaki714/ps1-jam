@@ -1,0 +1,122 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxbtwqnrsnxxq"]
+
+[ext_resource type="Script" path="res://action.gd" id="1_6yspb"]
+[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="2_j1rbw"]
+[ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="3_l2w1b"]
+
+[node name="Intro Room" type="Node3D"]
+
+[node name="lighttimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -0.5, 9.4, 13.2)
+visible = false
+light_energy = 0.821
+light_indirect_energy = 1.95
+spot_range = 20.843
+spot_attenuation = -3.66
+spot_angle = 10.59
+spot_angle_attenuation = 362.037
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(11.1189, 0, 0, 0, 0.505217, 0, 0, 0, 22.5958, -0.299999, -0.2, 2.91524)
+size = Vector3(1.6, 1, 0.741699)
+
+[node name="ceiling" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(11.1189, 0, 0, 0, 0.505217, 0, 0, 0, 22.5958, -0.245302, 11.0104, 2.9358)
+size = Vector3(1.6, 1, 0.741699)
+
+[node name="ceiling2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(7.77173, 0, 0, 0, 0.35313, 0, 0, 0, 15.7937, -0.508003, 10.6241, 15.4788)
+size = Vector3(0.95813, 1, 0.5)
+
+[node name="lightroom floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(7.77173, 0, 0, 0, 0.35313, 0, 0, 0, 15.7937, -0.408003, 6.63174, 15.1994)
+size = Vector3(0.95813, 1, 0.5)
+
+[node name="wall" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.00872402, -0.504693, 0, 11.1074, 0.0003964, 0, 0, 0, 22.8998, -8.83306, 5.77199, 2.95156)
+size = Vector3(1.09778, 1, 0.740723)
+
+[node name="wall 2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.00875604, -0.506546, 0, 11.1481, 0.000397855, 0, 0, 0, 23.1861, 8.15987, 5.70138, 3.08625)
+size = Vector3(1.08936, 1, 0.731323)
+
+[node name="lightroom wall" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.00884499, -0.511692, 0, 11.2614, 0.000401896, 0, 0, 0, 14.7856, 3.09777, 8.56102, 14.8273)
+size = Vector3(0.402222, 1, 0.453552)
+
+[node name="lightroom wall3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.1517e-14, 2.23668e-08, 14.7856, 11.2614, -2.23668e-08, 0, 4.92251e-07, 0.511692, -6.463e-07, -0.343904, 8.56102, 17.9065)
+size = Vector3(0.402222, 1, 0.5)
+
+[node name="lightroom wall2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.00874786, -0.506073, 0, 11.1377, 0.000397483, 0, 0, 0, 14.6232, -3.86714, 8.56102, 14.8058)
+size = Vector3(0.402222, 1, 0.450623)
+
+[node name="wall 3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 17.7718, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -7.76829e-07, -0.522094, 5.71726, -5.32127)
+size = Vector3(1.07959, 1, 1)
+
+[node name="wall 4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 11.1074, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -4.85518e-07, -5.86545, 5.78433, 11.3459)
+size = Vector3(1.1, 1, 0.5)
+
+[node name="wall 5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.12227e-14, 2.20609e-08, 11.1074, 11.1074, -2.20609e-08, 0, 4.85518e-07, 0.504694, -4.85518e-07, 5.31561, 5.67359, 11.3459)
+size = Vector3(1.1, 1, 0.6)
+
+[node name="wall 7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.81554e-15, 2.20609e-08, 11.1074, 3.56706, -2.20609e-08, 0, 1.55921e-07, 0.504694, -4.85518e-07, -0.762738, 3.26777, 11.3459)
+size = Vector3(2.07031, 1, 1)
+
+[node name="wall 6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.40425e-14, 2.21171e-08, 11.1357, 7.34945, -2.21171e-08, 0, 3.21255e-07, 0.50598, -4.86756e-07, -0.3431, 10.7973, 11.2582)
+size = Vector3(0.292114, 1, 1)
+
+[node name="roomlight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, -0.3, 8.8, 14.6)
+visible = false
+light_energy = 4.164
+omni_range = 4.0
+
+[node name="spotlight physical" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, -0.4, 10.2, 15.6)
+
+[node name="person" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 6.7, 12.5)
+radius = 0.3
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="person"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+radius = 0.4
+
+[node name="person2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, 6.7, 12)
+radius = 0.3
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="person2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+radius = 0.4
+
+[node name="action" type="Node3D" parent="."]
+script = ExtResource("1_6yspb")
+
+[node name="Dude" parent="." instance=ExtResource("2_j1rbw")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.918874, -1.72473)
+
+[node name="MeshInstance3D" parent="Dude/Graphics" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.86116e-09, -0.0892203, -0.032728)
+
+[node name="PlayerCore" parent="Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("3_l2w1b")]
+_moveComponent = NodePath("../MoveComponent")
+
+[connection signal="timeout" from="lighttimer" to="action" method="_on_timer_timeout"]
+
+[editable path="Dude"]

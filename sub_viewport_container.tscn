@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dckcr72udmyw0"]
+[gd_scene load_steps=7 format=3 uid="uid://dckcr72udmyw0"]
 
 [ext_resource type="Shader" uid="uid://cnxv016ol1yfe" path="res://ps1-postprocessing-grau-godotshadersdotcom.gdshader" id="1_mmcge"]
-[ext_resource type="PackedScene" uid="uid://b1shtyjdx7je7" path="res://World.tscn" id="2_w8ewg"]
+[ext_resource type="PackedScene" uid="uid://cxbtwqnrsnxxq" path="res://IntroRoom.tscn" id="2_rbxnt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iqr2y"]
 shader = ExtResource("1_mmcge")
@@ -10,14 +10,35 @@ shader_parameter/dithering = true
 shader_parameter/colors = 12
 shader_parameter/dither_size = 1
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rbxnt"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_gcxxy"]
+sky_material = SubResource("ProceduralSkyMaterial_rbxnt")
+
+[sub_resource type="Environment" id="Environment_niex8"]
+background_mode = 2
+sky = SubResource("Sky_gcxxy")
+ambient_light_source = 1
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="SubViewportContainer" type="SubViewportContainer"]
 material = SubResource("ShaderMaterial_iqr2y")
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_niex8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.322266, 0.946649, 4.13793e-08, 0, -4.37114e-08, 1, 0.946649, 0.322266, 1.40867e-08, 0, 20, 0)
+shadow_enabled = true
 
 [node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
 size = Vector2i(640, 480)
 render_target_update_mode = 4
 
-[node name="World" parent="SubViewport" instance=ExtResource("2_w8ewg")]
+[node name="Intro Room" parent="SubViewport" instance=ExtResource("2_rbxnt")]
