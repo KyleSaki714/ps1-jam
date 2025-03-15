@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://lpujiojj5ysa"]
-
-[ext_resource type="PackedScene" uid="uid://ba755dcih3a2j" path="res://Scripts/Interactor.tscn" id="1_eoncu"]
-[ext_resource type="Script" uid="uid://c6peo8r2b3og3" path="res://Scripts/player_interactor.gd" id="2_mcaob"]
-
-[node name="PlayerInteractor" instance=ExtResource("1_eoncu")]
-script = ExtResource("2_mcaob")
