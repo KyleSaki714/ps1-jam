@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="2_i6qxv"]
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="3_i6qxv"]
 [ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_35mfd"]
-[ext_resource type="PackedScene" uid="uid://bj6ubcm5hu5jm" path="res://Components/SceneTransitioner.tscn" id="5_3l551"]
+[ext_resource type="PackedScene" uid="uid://dryj3r7xaxaen" path="res://Components/SceneTransitioner.tscn" id="5_3l551"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f6ed7"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)

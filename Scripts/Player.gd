@@ -8,6 +8,9 @@ class_name PlayerCore
 
 var _mouseCaptured = false
 var _currentInteractObject = null # the object the player is currently looking at
+var _hasKey = false
+var _isHuman = true
+
 
 func _ready():
 	capture_mouse()
@@ -39,6 +42,14 @@ func _process(delta: float) -> void:
 			# for future reference I don't think StaticBody is supposed to be
 			# used like this, I think an Area3D is better.
 			_currentInteractObject.sceneChange()
+		if _currentInteractObject is key:
+			_currentInteractObject.getKey()
+			_hasKey = true
+		if _currentInteractObject is cage:
+			if _hasKey == true:
+				_currentInteractObject.release()
+			#else: send a message 'key required'
+				
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
 	var query = createRaycastQuery()
@@ -50,7 +61,7 @@ func _process(delta: float) -> void:
 	var result = spaceState.intersect_ray(query)
 	if !result.is_empty():
 		_currentInteractObject = result["collider"]
-		#print(_currentInteractObject)
+		print(_currentInteractObject)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -97,6 +108,7 @@ func transferPlayer(newBody : CharacterBody3D):
 	# deactivate the old camera
 	_moveComponent._camera.current = false
 	reparent(newBody)
+	_isHuman = false
 	_moveComponent = newBody.get_node_or_null("MoveComponent")
 	_moveComponent._camera.current = true
 
