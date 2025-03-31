@@ -9,8 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://rk651xaeamlo" path="res://Models/researchlaboutside.blend" id="8_m5qbc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f6ed7"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+sky_top_color = Color(0.23141, 0.281588, 0.351375, 1)
+sky_horizon_color = Color(0.310797, 0.318822, 0.33149, 1)
+sky_cover_modulate = Color(0.724643, 0.724643, 0.724643, 1)
+ground_horizon_color = Color(0.224605, 0.230947, 0.240959, 1)
 
 [sub_resource type="Sky" id="Sky_i6qxv"]
 sky_material = SubResource("ProceduralSkyMaterial_f6ed7")
@@ -27,7 +29,8 @@ glow_enabled = true
 environment = SubResource("Environment_35mfd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.89145, -0.348124, 0.290046, -0.22656, 0.211908, 0.950666, -0.392413, -0.913184, 0.110035, 0, 0, 0)
+transform = Transform3D(0.982962, -0.078188, 0.166351, -0.170152, -0.044732, 0.984402, -0.0695272, -0.995935, -0.0572737, 0, 0, 0)
+light_color = Color(0.0605303, 0.0605303, 0.0605303, 1)
 shadow_enabled = true
 
 [node name="ResearchLabOutside" parent="." instance=ExtResource("1_re4b8")]
@@ -64,12 +67,13 @@ transform = Transform3D(-2.6316e-07, 0, -6.02039, 0, 9.69795, 0, 6.02039, 0, -2.
 texture = ExtResource("3_i6qxv")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Decor"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16.7465, 10.1358, -7.51801)
-light_energy = 7.142
-omni_range = 7.79136
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16.2987, 8.15372, -7.81114)
+light_energy = 16.0
+light_size = 0.323
+omni_range = 10.9945
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Decor"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16.1298, 11.9821, -4.66354)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -16.1298, 12.6067, -4.66354)
 light_energy = 10.051
 spot_range = 22.504
 spot_angle = 32.1704
@@ -83,6 +87,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.0778, 0.51094, -3.83796)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
-[node name="researchlaboutside2" parent="." instance=ExtResource("8_m5qbc")]
+[node name="researchlaboutside" parent="." instance=ExtResource("8_m5qbc")]
 
 [editable path="Dude"]
