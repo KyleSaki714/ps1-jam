@@ -69,26 +69,28 @@ shape = SubResource("CapsuleShape3D_grvvb")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3.45455, 1.45573, 3.80898)
 
-[node name="Dude" parent="." instance=ExtResource("2_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
-
-[node name="PlayerCore" parent="Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("3_eu7l1")]
-_moveComponent = NodePath("../MoveComponent")
-
-[node name="Rat" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679857, 0, 2.07367)
-
-[node name="Rat2" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)
-
-[node name="Rat3" parent="." instance=ExtResource("4_eu7l1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65147, 0.7, 21.763)
-
 [node name="Key" parent="." instance=ExtResource("5_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 15.9)
 
 [node name="Cage" parent="." instance=ExtResource("6_p1v5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.4, 21.3)
 
-[editable path="Dude"]
-[editable path="Rat"]
+[node name="CharactersContainer" type="Node3D" parent="."]
+
+[node name="Rat" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679857, 0, 2.07367)
+
+[node name="Rat2" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)
+
+[node name="Rat3" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65147, 0.7, 21.763)
+
+[node name="Dude" parent="CharactersContainer" instance=ExtResource("2_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
+
+[node name="PlayerCore" parent="CharactersContainer/Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("3_eu7l1")]
+_moveComponent = NodePath("../MoveComponent")
+
+[editable path="CharactersContainer/Rat"]
+[editable path="CharactersContainer/Dude"]

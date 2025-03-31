@@ -35,6 +35,9 @@ func _process(delta: float) -> void:
 		_moveComponent.set_jump(false)
 	if Input.is_action_pressed("pause"):
 		release_mouse()
+	if Input.is_action_just_pressed("return to last body"):
+		if _previousBody != null:
+			transferPlayer(_previousBody)
 	if (Input.is_action_just_pressed("interact")):
 		if _currentInteractObject is CharacterBody3D:
 			transferPlayer(_currentInteractObject)
@@ -123,9 +126,11 @@ func transferPlayer(newBody : CharacterBody3D):
 	if newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
 		_isHuman = true
 		print("swtich to human")
+		# show rat model
+		get_parent_node_3d().get_node_or_null("./Graphics").show()
 	else:
-		print("switch to rat")
 		_isHuman = false
+		print("switch to rat")
 	
 	# assign the last controlled body
 	_previousBody = get_parent_node_3d()
@@ -138,6 +143,10 @@ func transferPlayer(newBody : CharacterBody3D):
 	_moveComponent = newBody.get_node_or_null("MoveComponent")
 	_moveComponent._camera.current = true
 	
+	# hide rat model while controlling it
+	if _isHuman == false:
+		get_parent_node_3d().get_node_or_null("./Graphics").hide()
+		
 
 # using a starting point, direction vector, and distance float, use
 # the camera and current body's rotation to create a raycast
