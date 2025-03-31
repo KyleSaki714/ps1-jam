@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dckcr72udmyw0"]
 
 [ext_resource type="Shader" uid="uid://cnxv016ol1yfe" path="res://ps1-postprocessing-grau-godotshadersdotcom.gdshader" id="1_mmcge"]
-[ext_resource type="PackedScene" uid="uid://cgp3evwoti32h" path="res://IntroRoom.tscn" id="2_rbxnt"]
+[ext_resource type="PackedScene" uid="uid://b6k7yjt1jmq8w" path="res://IntroRoom.tscn" id="2_rbxnt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iqr2y"]
 shader = ExtResource("1_mmcge")

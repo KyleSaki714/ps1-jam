@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://cce02rb74pyua"]
+
+[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="1_5ok2e"]
+[ext_resource type="PackedScene" uid="uid://rl48aisn2wbi" path="res://Rooms/custodian_room.tscn" id="1_6qgux"]
+[ext_resource type="PackedScene" uid="uid://beywrdxx6syw3" path="res://Rooms/hallway.tscn" id="2_70sls"]
+[ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="2_vj88a"]
+[ext_resource type="PackedScene" uid="uid://dgfmxvvdfao1c" path="res://Rooms/lab_room_1.tscn" id="3_70sls"]
+[ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="6_vxjgx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5ok2e"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_vj88a"]
+sky_material = SubResource("ProceduralSkyMaterial_5ok2e")
+
+[sub_resource type="Environment" id="Environment_6qgux"]
+background_mode = 2
+sky = SubResource("Sky_vj88a")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="ResearchLab" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6qgux")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.699663, 0.110536, 0.70587, 0.496646, 0.785479, 0.369276, -0.513628, 0.608937, -0.604468, 0, 0, -156.426)
+shadow_enabled = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CustodianRoom" parent="CSGCombiner3D" instance=ExtResource("1_6qgux")]
+
+[node name="Hallway" parent="CSGCombiner3D" instance=ExtResource("2_70sls")]
+
+[node name="labroom1" parent="CSGCombiner3D" instance=ExtResource("3_70sls")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 18.7266, 0, 20.5832)
+
+[node name="Dude" parent="." instance=ExtResource("1_5ok2e")]
+transform = Transform3D(-0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, -0.258819, -0.566015, 3.11526, -3.14388)
+
+[node name="PlayerCore" parent="Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("2_vj88a")]
+_moveComponent = NodePath("../MoveComponent")
+
+[node name="Rat" parent="." instance=ExtResource("6_vxjgx")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 21.0059, 7.44172, 15.3708)
+
+[editable path="Dude"]
