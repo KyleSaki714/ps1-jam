@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bak1xq70vukg6"]
 
-[ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="1_uwk8q"]
-[ext_resource type="Texture2D" uid="uid://dmrahewbgsp87" path="res://assets/textures/crosshair16_dot.png" id="2_yrjoe"]
-[ext_resource type="Texture2D" uid="uid://ifia8n3uflj5" path="res://assets/textures/crosshair16.png" id="3_e02sh"]
+[ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="1_t0xvn"]
+[ext_resource type="Texture2D" uid="uid://dmrahewbgsp87" path="res://assets/textures/crosshair16_dot.png" id="2_m24h3"]
+[ext_resource type="PackedScene" uid="uid://cfbuvpbitjo3t" path="res://Components/CharacterInfo.tscn" id="3_sxvxs"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_eu7l1"]
 
@@ -17,7 +17,7 @@ collision_layer = 3
 mesh = SubResource("CapsuleMesh_eu7l1")
 skeleton = NodePath("../..")
 
-[node name="MoveComponent" parent="." node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("1_uwk8q")]
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("_bodyToMove", "_camera") instance=ExtResource("1_t0xvn")]
 _bodyToMove = NodePath("..")
 _camera = NodePath("../Camera3D")
 _jumpForce = 8
@@ -39,12 +39,10 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_yrjoe")
+texture = ExtResource("2_m24h3")
 stretch_mode = 3
-
-[node name="Sprite3D" type="Sprite3D" parent="Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.46239)
-texture = ExtResource("3_e02sh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_p1v5b")
+
+[node name="CharacterInfo" parent="." instance=ExtResource("3_sxvxs")]

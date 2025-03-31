@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cce02rb74pyua"]
 
-[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="1_5ok2e"]
+[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Dude.tscn" id="1_5ok2e"]
 [ext_resource type="PackedScene" uid="uid://rl48aisn2wbi" path="res://Rooms/custodian_room.tscn" id="1_6qgux"]
 [ext_resource type="PackedScene" uid="uid://beywrdxx6syw3" path="res://Rooms/hallway.tscn" id="2_70sls"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="2_vj88a"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://vly1dwti5hdy"]
+[gd_scene load_steps=10 format=4 uid="uid://vly1dwti5hdy"]
 
 [ext_resource type="Material" uid="uid://dhf83v7v03d8r" path="res://shaders/RatMaterial.tres" id="1_apg4c"]
 [ext_resource type="Texture2D" uid="uid://b8qe8hymoa3bj" path="res://assets/rat_rat_rat_texture_64.png" id="1_bo4j8"]
 [ext_resource type="Material" uid="uid://caqm01d7m4mxm" path="res://shaders/Xraymaterial.tres" id="2_nl4ot"]
 [ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="2_xvbv6"]
+[ext_resource type="PackedScene" uid="uid://cfbuvpbitjo3t" path="res://Components/CharacterInfo.tscn" id="5_nl4ot"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_era3b"]
 resource_name = "Material.001"
@@ -78,3 +79,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00257635, 0.261623, -0.2360
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.192774, 0)
 shape = SubResource("CapsuleShape3D_apg4c")
+
+[node name="CharacterInfo" parent="." instance=ExtResource("5_nl4ot")]
+_char_type = 1

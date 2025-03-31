@@ -9,10 +9,11 @@ class_name PlayerCore
 var _mouseCaptured = false
 var _currentInteractObject = null # the object the player is currently looking at
 var _hasKey = false
-var _isHuman = true
-
+var _isHuman = false # the current character this player is controlling is a human.
+var _previousBody : CharacterBody3D # most recently controlled body, human or rat
 
 func _ready():
+	_isHuman = true
 	capture_mouse()
 
 func _process(delta: float) -> void:
@@ -34,7 +35,7 @@ func _process(delta: float) -> void:
 		_moveComponent.set_jump(false)
 	if Input.is_action_pressed("pause"):
 		release_mouse()
-	if (Input.is_action_pressed("interact")):
+	if (Input.is_action_just_pressed("interact")):
 		if _currentInteractObject is CharacterBody3D:
 			transferPlayer(_currentInteractObject)
 			# TODO: make a cooldown for transferring control? 
@@ -49,6 +50,8 @@ func _process(delta: float) -> void:
 			if _hasKey == true:
 				_currentInteractObject.release()
 			#else: send a message 'key required'
+		
+		_currentInteractObject = null
 				
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
@@ -61,7 +64,7 @@ func _process(delta: float) -> void:
 	var result = spaceState.intersect_ray(query)
 	if !result.is_empty():
 		_currentInteractObject = result["collider"]
-		print(_currentInteractObject)
+		#print(_currentInteractObject)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -101,16 +104,40 @@ func transferPlayer(newBody : CharacterBody3D):
 		return
 	var mc = newBody.get_node_or_null("MoveComponent")
 	var cam = newBody.get_node_or_null("Camera3D")
-	if mc == null or cam == null:
-		push_error("new body does not have a MoveComponent!")
+	var charInfo : CharacterInfo = newBody.get_node_or_null("CharacterInfo")
+	if mc == null or cam == null or charInfo == null:
+		push_error("new body does not have a MoveComponent, Camera3D, or CharacterInfo! transfer aborted")
 		return
+	
+	# make sure transfer is eligible (human -> rat, rat -> human)
+	var newBodyCharacterType = charInfo.getCharacterType()
+	# X: human -> human
+	if _isHuman and newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
+		print("human cannot switch to human")
+		return
+	# X: rat -> rat
+	if _isHuman == false and newBodyCharacterType == CharacterInfo.CHAR_TYPES.RAT:
+		print("rat cannot switch to rat")
+		return
+	
+	if newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
+		_isHuman = true
+		print("swtich to human")
+	else:
+		print("switch to rat")
+		_isHuman = false
+	
+	# assign the last controlled body
+	_previousBody = get_parent_node_3d()
+	if _previousBody == null:
+		push_warning("was not able to retrieve previously controlled body (CharacterBody3D) from scene tree (the parent of PlayerCore)")
 	
 	# deactivate the old camera
 	_moveComponent._camera.current = false
 	reparent(newBody)
-	_isHuman = false
 	_moveComponent = newBody.get_node_or_null("MoveComponent")
 	_moveComponent._camera.current = true
+	
 
 # using a starting point, direction vector, and distance float, use
 # the camera and current body's rotation to create a raycast

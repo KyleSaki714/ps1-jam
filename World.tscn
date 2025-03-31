@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
-[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="2_eu7l1"]
+[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Dude.tscn" id="2_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="3_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://cxmp4aapkd7q6" path="res://Components/key.tscn" id="5_eu7l1"]
@@ -29,7 +29,6 @@ material = SubResource("StandardMaterial3D_1r2g6")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grvvb"]
 
 [node name="World" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, -1.1, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eu7l1")

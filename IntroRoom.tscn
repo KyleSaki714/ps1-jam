@@ -1,8 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b6k7yjt1jmq8w"]
 
-
-[ext_resource type="Script" path="res://Scripts/action.gd" id="1_6yspb"]
-[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Player.tscn" id="2_j1rbw"]
+[ext_resource type="Script" uid="uid://e2eou227qeie" path="res://Scripts/action.gd" id="1_6yspb"]
+[ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Dude.tscn" id="2_j1rbw"]
 [ext_resource type="PackedScene" uid="uid://dbk1dg0uth3aa" path="res://Components/PlayerCore.tscn" id="3_l2w1b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j1rbw"]
