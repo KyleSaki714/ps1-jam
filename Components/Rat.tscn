@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://vly1dwti5hdy"]
+[gd_scene load_steps=11 format=4 uid="uid://vly1dwti5hdy"]
 
 [ext_resource type="Material" uid="uid://dhf83v7v03d8r" path="res://shaders/RatMaterial.tres" id="1_apg4c"]
 [ext_resource type="Texture2D" uid="uid://b8qe8hymoa3bj" path="res://assets/rat_rat_rat_texture_64.png" id="1_bo4j8"]
+[ext_resource type="Script" uid="uid://bqa3mwym33fob" path="res://Components/rat.gd" id="1_mpsbm"]
 [ext_resource type="Material" uid="uid://caqm01d7m4mxm" path="res://shaders/Xraymaterial.tres" id="2_nl4ot"]
 [ext_resource type="PackedScene" uid="uid://cj7474nwi5kyt" path="res://Components/MoveComponent.tscn" id="2_xvbv6"]
 [ext_resource type="PackedScene" uid="uid://cfbuvpbitjo3t" path="res://Components/CharacterInfo.tscn" id="5_nl4ot"]
@@ -53,6 +54,7 @@ height = 0.642828
 
 [node name="Rat" type="CharacterBody3D"]
 collision_layer = 3
+script = ExtResource("1_mpsbm")
 
 [node name="Graphics" type="Node3D" parent="."]
 

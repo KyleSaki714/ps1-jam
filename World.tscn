@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=14 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
 [ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Dude.tscn" id="2_eu7l1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://vly1dwti5hdy" path="res://Components/Rat.tscn" id="4_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://cxmp4aapkd7q6" path="res://Components/key.tscn" id="5_eu7l1"]
 [ext_resource type="PackedScene" uid="uid://tce7hu40mbx5" path="res://Components/cage.tscn" id="6_p1v5b"]
+[ext_resource type="Script" uid="uid://c6aeebo8i18x" path="res://Scripts/rat_manager.gd" id="7_wygdx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcbcq"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -75,22 +76,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 15.9)
 [node name="Cage" parent="." instance=ExtResource("6_p1v5b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.4, 21.3)
 
-[node name="CharactersContainer" type="Node3D" parent="."]
-
-[node name="Rat" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+[node name="Rat" parent="." instance=ExtResource("4_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.679857, 0, 2.07367)
 
-[node name="Rat2" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+[node name="Rat2" parent="." instance=ExtResource("4_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)
 
-[node name="Rat3" parent="CharactersContainer" instance=ExtResource("4_eu7l1")]
+[node name="Rat3" parent="." instance=ExtResource("4_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65147, 0.7, 21.763)
 
-[node name="Dude" parent="CharactersContainer" instance=ExtResource("2_eu7l1")]
+[node name="Dude" parent="." instance=ExtResource("2_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
 
-[node name="PlayerCore" parent="CharactersContainer/Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("3_eu7l1")]
+[node name="PlayerCore" parent="Dude" node_paths=PackedStringArray("_moveComponent") instance=ExtResource("3_eu7l1")]
 _moveComponent = NodePath("../MoveComponent")
 
-[editable path="CharactersContainer/Rat"]
-[editable path="CharactersContainer/Dude"]
+[node name="RatManager" type="Node3D" parent="." node_paths=PackedStringArray("player", "rats")]
+script = ExtResource("7_wygdx")
+player = NodePath("../Dude/PlayerCore")
+rats = [NodePath("../Rat"), NodePath("../Rat2"), NodePath("../Rat3")]
+
+[editable path="Rat"]
+[editable path="Dude"]

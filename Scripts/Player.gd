@@ -2,6 +2,8 @@ extends Node3D
 
 class_name PlayerCore
 
+signal setRatXray(xrayOn)
+
 @export var _moveComponent : MoveComponent
 @export var _transferDistance = 4 # the radius to reach rats to control
 @export var _mouseSens = 0.5
@@ -55,7 +57,6 @@ func _process(delta: float) -> void:
 			#else: send a message 'key required'
 		
 		_currentInteractObject = null
-				
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
 	var query = createRaycastQuery()
@@ -124,11 +125,13 @@ func transferPlayer(newBody : CharacterBody3D):
 		return
 	
 	if newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
+		setRatXray.emit(true)
 		_isHuman = true
 		print("swtich to human")
 		# show rat model
 		get_parent_node_3d().get_node_or_null("./Graphics").show()
 	else:
+		setRatXray.emit(false)
 		_isHuman = false
 		print("switch to rat")
 	
