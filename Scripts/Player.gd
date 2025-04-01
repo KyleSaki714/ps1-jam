@@ -52,10 +52,14 @@ func _process(delta: float) -> void:
 			_currentInteractObject.getKey()
 			_hasKey = true
 		if _currentInteractObject is cage:
-			if _hasKey == true:
-				_currentInteractObject.release()
-			#else: send a message 'key required'
-		
+			if _isHuman == true:
+				if _hasKey == true:
+					_currentInteractObject.release()
+					_hasKey = false
+				else:
+					print("key required!!")
+			else: # send a message 'key required'
+				print("only humans can unlock this!!")
 		_currentInteractObject = null
 	
 	# --- RAYCAST FOR INTERACTION SYSTEM ---
