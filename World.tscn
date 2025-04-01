@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1shtyjdx7je7"]
+[gd_scene load_steps=16 format=3 uid="uid://b1shtyjdx7je7"]
 
 [ext_resource type="Texture2D" uid="uid://b240prynng2uu" path="res://icon.svg" id="1_m1ybr"]
 [ext_resource type="PackedScene" uid="uid://bak1xq70vukg6" path="res://Components/Dude.tscn" id="2_eu7l1"]
@@ -28,6 +28,10 @@ albedo_texture = ExtResource("1_m1ybr")
 material = SubResource("StandardMaterial3D_1r2g6")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_grvvb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wygdx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bah7m"]
 
 [node name="World" type="Node3D"]
 
@@ -95,6 +99,15 @@ _moveComponent = NodePath("../MoveComponent")
 script = ExtResource("7_wygdx")
 player = NodePath("../Dude/PlayerCore")
 rats = [NodePath("../Rat"), NodePath("../Rat2"), NodePath("../Rat3")]
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(0.680363, 0.732875, 0, -0.613748, 0.569771, -0.546511, -0.400525, 0.371826, 0.837452, 2.44005, 2.09668, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+mesh = SubResource("BoxMesh_wygdx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_bah7m")
 
 [editable path="Rat"]
 [editable path="Dude"]
