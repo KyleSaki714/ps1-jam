@@ -89,6 +89,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3498, 0, 4.96918)
 [node name="Rat3" parent="." instance=ExtResource("4_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65147, 0.7, 21.763)
 
+[node name="Rat4" parent="." instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85395, 0.7, 14.4575)
+
+[node name="Rat5" parent="." instance=ExtResource("4_eu7l1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.23594, 0.7, 13.993)
+
 [node name="Dude" parent="." instance=ExtResource("2_eu7l1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83403, 1.0749, -0.13811)
 
@@ -98,7 +104,7 @@ _moveComponent = NodePath("../MoveComponent")
 [node name="RatManager" type="Node3D" parent="." node_paths=PackedStringArray("player", "rats")]
 script = ExtResource("7_wygdx")
 player = NodePath("../Dude/PlayerCore")
-rats = [NodePath("../Rat"), NodePath("../Rat2"), NodePath("../Rat3")]
+rats = [NodePath("../Rat"), NodePath("../Rat2"), NodePath("../Rat3"), NodePath("../Rat4"), NodePath("../Rat5")]
 
 [node name="Box" type="RigidBody3D" parent="."]
 transform = Transform3D(0.680363, 0.732875, 0, -0.613748, 0.569771, -0.546511, -0.400525, 0.371826, 0.837452, 2.44005, 2.09668, 0)

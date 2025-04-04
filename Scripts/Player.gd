@@ -12,10 +12,14 @@ var _mouseCaptured = false
 var _currentInteractObject = null # the object the player is currently looking at
 var _hasKey = false
 var _isHuman = false # the current character this player is controlling is a human.
+var _currentControllingBody : CharacterBody3D = null
 var _previousBody : CharacterBody3D # most recently controlled body, human or rat
 
 func _ready():
 	_isHuman = true
+	_currentControllingBody = get_parent_node_3d()
+	if _currentControllingBody == null:
+		push_error("_currentControllingBody is null at _ready() ?")
 	capture_mouse()
 
 func _process(delta: float) -> void:
@@ -119,13 +123,20 @@ func transferPlayer(newBody : CharacterBody3D):
 	
 	# make sure transfer is eligible (human -> rat, rat -> human)
 	var newBodyCharacterType = charInfo.getCharacterType()
-	# X: human -> human
+	# cannot switch from human -> human
 	if _isHuman and newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
 		print("human cannot switch to human")
 		return
-	# X: rat -> rat
+	# rat -> rat: selected rat stacks on top of currently controlled rat
 	if _isHuman == false and newBodyCharacterType == CharacterInfo.CHAR_TYPES.RAT:
-		print("rat cannot switch to rat")
+		#print("rat cannot switch to rat")
+		if newBody is not Rat:
+			push_warning("error, body to stack is not a rat, aborting")
+			return
+			
+		_currentControllingBody.stackRat(newBody)
+			
+		#newBody.stackOn(get_parent_node_3d())
 		return
 	
 	if newBodyCharacterType == CharacterInfo.CHAR_TYPES.HUMAN:
@@ -133,14 +144,14 @@ func transferPlayer(newBody : CharacterBody3D):
 		_isHuman = true
 		print("swtich to human")
 		# show rat model
-		get_parent_node_3d().get_node_or_null("./Graphics").show()
+		_currentControllingBody.get_node_or_null("./Graphics").show()
 	else:
 		setRatXray.emit(false)
 		_isHuman = false
 		print("switch to rat")
 	
 	# assign the last controlled body
-	_previousBody = get_parent_node_3d()
+	_previousBody = _currentControllingBody
 	if _previousBody == null:
 		push_warning("was not able to retrieve previously controlled body (CharacterBody3D) from scene tree (the parent of PlayerCore)")
 	
@@ -150,15 +161,21 @@ func transferPlayer(newBody : CharacterBody3D):
 	_moveComponent = newBody.get_node_or_null("MoveComponent")
 	_moveComponent._camera.current = true
 	
+	_currentControllingBody = get_parent_node_3d()
+	
 	# hide rat model while controlling it
 	if _isHuman == false:
-		get_parent_node_3d().get_node_or_null("./Graphics").hide()
-		
+		_currentControllingBody.get_node_or_null("./Graphics").hide()
+	
 
 # using a starting point, direction vector, and distance float, use
 # the camera and current body's rotation to create a raycast
 # that checks for collisions in front of the camera
 func createRaycastQuery() -> PhysicsRayQueryParameters3D:
+	if _currentControllingBody == null:
+		push_error("_currentControllingBody is null, cannot create raycast")
+		return
+	
 	# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
 
 	# get the camera's position in global space
@@ -166,7 +183,7 @@ func createRaycastQuery() -> PhysicsRayQueryParameters3D:
 	# using the X rotation from the camera, and the Y rotation from the current CharacterBody3D,
 	# create the direction vector (rayDir) that points in the direction of the camera.  
 	var xRot = deg_to_rad(_moveComponent._camera.rotation_degrees.x) # Pitch
-	var yRot = deg_to_rad(get_parent_node_3d().rotation_degrees.y) # Yaw
+	var yRot = deg_to_rad(_currentControllingBody.rotation_degrees.y) # Yaw
 	# apply basis vectors transformation
 	# thanks to ChatGPT https://chatgpt.com/share/67ce3226-c2e4-8001-b540-97d23755dd49
 	var basis = Basis(Vector3.UP, yRot) * Basis(Vector3.RIGHT, xRot) # apply yaw, then pitch
@@ -175,5 +192,5 @@ func createRaycastQuery() -> PhysicsRayQueryParameters3D:
 	var secondCameraPos = rayDir * _transferDistance + cameraPos
 	
 	# create the raycast and intersect the ray
-	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b110, [self.get_parent_node_3d().get_rid()]) # 20 is distance
+	return PhysicsRayQueryParameters3D.create(cameraPos, secondCameraPos, 0b110, [self._currentControllingBody.get_rid()]) # 20 is distance
 	
